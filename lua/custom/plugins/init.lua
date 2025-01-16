@@ -9,6 +9,7 @@ local plugins = {
   require 'custom.plugins.fugitive',
   require 'custom.plugins.null-ls',
   require 'custom.plugins.typescript-tools',
+  require 'custom.plugins.ts-autotag',
 }
 
 return plugins
