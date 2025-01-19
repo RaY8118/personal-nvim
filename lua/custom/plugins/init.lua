@@ -10,6 +10,8 @@ local plugins = {
   require 'custom.plugins.null-ls',
   require 'custom.plugins.typescript-tools',
   require 'custom.plugins.ts-autotag',
+  require 'custom.plugins.markdown',
+  require 'custom.plugins.harpoon',
 }
 
 return plugins

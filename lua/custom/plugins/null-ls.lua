@@ -6,7 +6,7 @@ return {
   },
   config = function()
     local null_ls = require 'null-ls'
-    local formatting = null_ls.builtins.formatting -- to setup formatters
+    local formatting = null_ls.builtins.formatting   -- to setup formatters
     local diagnostics = null_ls.builtins.diagnostics -- to setup linters
 
     -- list of formatters & linters for mason to install
@@ -14,10 +14,11 @@ return {
       ensure_installed = {
         'checkmake',
         'prettier', -- ts/js formatter
-        'stylua', -- lua formatter
+        'stylua',   -- lua formatter
         'eslint_d', -- ts/js linter
         'shfmt',
         'ruff',
+        'markdownlint',
       },
       -- auto-install configured formatters & linters (with null-ls)
       automatic_installation = true,
@@ -31,6 +32,7 @@ return {
       formatting.terraform_fmt,
       require('none-ls.formatting.ruff').with { extra_args = { '--extend-select', 'I', '--tab-width', '2' } },
       require 'none-ls.formatting.ruff_format',
+      diagnostics.markdownlint,
     }
 
     local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
