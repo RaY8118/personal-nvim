@@ -2,11 +2,12 @@ return {
   'nvimtools/none-ls.nvim',
   dependencies = {
     'nvimtools/none-ls-extras.nvim',
-    'jayp0521/mason-null-ls.nvim', -- ensure dependencies are installed
+    'jayp0521/mason-null-ls.nvim',
+    'windwp/nvim-ts-autotag', -- ensure dependencies are installed
   },
   config = function()
     local null_ls = require 'null-ls'
-    local formatting = null_ls.builtins.formatting   -- to setup formatters
+    local formatting = null_ls.builtins.formatting -- to setup formatters
     local diagnostics = null_ls.builtins.diagnostics -- to setup linters
 
     -- list of formatters & linters for mason to install
@@ -14,7 +15,7 @@ return {
       ensure_installed = {
         'checkmake',
         'prettier', -- ts/js formatter
-        'stylua',   -- lua formatter
+        'stylua', -- lua formatter
         'eslint_d', -- ts/js linter
         'shfmt',
         'ruff',
@@ -53,5 +54,6 @@ return {
         end
       end,
     }
+    require('nvim-ts-autotag').setup()
   end,
 }

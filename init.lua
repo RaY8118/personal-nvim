@@ -212,6 +212,8 @@ vim.keymap.set('i', '<CapsLock>', '<Esc>', { noremap = true, silent = true })
 vim.keymap.set('n', '<CapsLock>', '<Esc>', { noremap = true, silent = true })
 vim.keymap.set('v', '<CapsLock>', '<Esc>', { noremap = true, silent = true })
 
+vim.cmd 'colorscheme default'
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -606,14 +608,14 @@ require('lazy').setup({
       })
 
       -- Change diagnostic symbols in the sign column (gutter)
-      -- if vim.g.have_nerd_font then
-      --   local signs = { ERROR = '', WARN = '', INFO = '', HINT = '' }
-      --   local diagnostic_signs = {}
-      --   for type, icon in pairs(signs) do
-      --     diagnostic_signs[vim.diagnostic.severity[type]] = icon
-      --   end
-      --   vim.diagnostic.config { signs = { text = diagnostic_signs } }
-      -- end
+      if vim.g.have_nerd_font then
+        local signs = { ERROR = '', WARN = '', INFO = '', HINT = '' }
+        local diagnostic_signs = {}
+        for type, icon in pairs(signs) do
+          diagnostic_signs[vim.diagnostic.severity[type]] = icon
+        end
+        vim.diagnostic.config { signs = { text = diagnostic_signs } }
+      end
 
       -- LSP servers and clients are able to communicate to each other what features they support.
       --  By default, Neovim doesn't support everything that is in the LSP specification.
@@ -643,6 +645,8 @@ require('lazy').setup({
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         ts_ls = {},
+        html = {},
+        cssls = {},
         pylsp = {
           settings = {
             pylsp = {
@@ -693,6 +697,8 @@ require('lazy').setup({
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
+        ensure_installed = vim.tbl_keys(servers),
+        automatic_installation = true,
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
@@ -770,12 +776,12 @@ require('lazy').setup({
           -- `friendly-snippets` contains a variety of premade snippets.
           --    See the README about individual language/framework/plugin snippets:
           --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+          {
+            'rafamadriz/friendly-snippets',
+            config = function()
+              require('luasnip.loaders.from_vscode').lazy_load()
+            end,
+          },
         },
       },
       'saadparwaiz1/cmp_luasnip',
@@ -863,37 +869,6 @@ require('lazy').setup({
           { name = 'path' },
         },
       }
-    end,
-  },
-
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'catppuccin/nvim',
-    name = 'catppuccin',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    init = function()
-      require('catppuccin').setup {
-        flavour = 'mocha',
-      }
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      -- vim.cmd.colorscheme 'catppuccin'
-
-      -- You can configure highlights by doing something like:
-      -- vim.cmd.hi 'Comment gui=none'
-    end,
-  },
-
-  {
-    'tiagovla/tokyodark.nvim',
-    opts = { gamma = 0.95 },
-    config = function(_, opts)
-      require('tokyodark').setup(opts)
-      vim.cmd [[colorscheme tokyodark]]
     end,
   },
   -- Highlight todo, notes, etc in comments
@@ -987,18 +962,21 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  require 'kickstart.plugins.debug',
-  require 'kickstart.plugins.indent_line',
-  require 'kickstart.plugins.lint',
-  require 'kickstart.plugins.autopairs',
-  require 'kickstart.plugins.neo-tree',
-  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  -- require 'kickstart.plugins.debug',
+  -- require 'kickstart.plugins.indent_line',
+  -- require 'kickstart.plugins.lint',
+  -- require 'kickstart.plugins.autopairs',
+  -- require 'kickstart.plugins.neo-tree',
+  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   { import = 'custom.plugins' },
+  require 'custom.themes.init',
+  --[[ { import = 'custom.themes' }, ]]
+  { import = 'kickstart.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
@@ -1008,21 +986,7 @@ require('lazy').setup({
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
     -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
-    icons = vim.g.have_nerd_font and {} or {
-      cmd = '⌘',
-      config = '🛠',
-      event = '📅',
-      ft = '📂',
-      init = '⚙',
-      keys = '🗝',
-      plugin = '🔌',
-      runtime = '💻',
-      require = '🌙',
-      source = '📄',
-      start = '🚀',
-      task = '📌',
-      lazy = '💤 ',
-    },
+    icons = vim.g.have_nerd_font and {},
   },
 })
 
