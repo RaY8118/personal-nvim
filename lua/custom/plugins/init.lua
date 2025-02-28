@@ -9,6 +9,7 @@ local plugins = {
   require 'custom.plugins.fugitive',
   require 'custom.plugins.markdown',
   require 'custom.plugins.harpoon',
+  require 'custom.plugins.autotag',
 }
 
 return plugins

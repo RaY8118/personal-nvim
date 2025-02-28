@@ -273,6 +273,9 @@ require('lazy').setup({
       require('nerdicons').setup {}
     end,
   },
+  {
+    'nvim-java/nvim-java',
+  },
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
@@ -651,15 +654,21 @@ require('lazy').setup({
           settings = {
             pylsp = {
               plugins = {
-                pyflakes = { enabled = false },
-                pycodestyle = { enabled = false },
+                -- formatter options
+                black = { enabled = true },
                 autopep8 = { enabled = false },
                 yapf = { enabled = false },
-                mccabe = { enabled = false },
+                -- Linter options
+                pylint = { enabled = false, executable = 'pylint' },
+                pyflakes = { enabled = false },
+                pycodestyle = { enabled = false },
+                -- type checker
                 pylsp_mypy = { enabled = true },
-                pylsp_black = { enabled = false },
-                pylsp_isort = { enabled = false },
-                jedi_completion = { enabled = true },
+                -- auto-completion options
+                jedi_completion = { fuzzy = true },
+                -- import sorting
+                pyls_isort = { enabled = true },
+                mccabe = { enabled = false },
               },
             },
           },
@@ -689,6 +698,9 @@ require('lazy').setup({
       --  You can press `g?` for help in this menu.
       require('mason').setup()
 
+      require('java').setup()
+      require('lspconfig').jdtls.setup {}
+
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
@@ -696,7 +708,6 @@ require('lazy').setup({
         'stylua', -- Used to format Lua code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
       require('mason-lspconfig').setup {
         ensure_installed = vim.tbl_keys(servers),
         automatic_installation = true,
@@ -749,7 +760,7 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        python = { 'isort', 'black' },
+        python = {},
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
