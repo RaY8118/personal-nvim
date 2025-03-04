@@ -10,6 +10,7 @@ local plugins = {
   require 'custom.plugins.markdown',
   require 'custom.plugins.harpoon',
   require 'custom.plugins.autotag',
+  require 'custom.plugins.yanky',
 }
 
 return plugins
