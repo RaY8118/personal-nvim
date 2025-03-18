@@ -214,6 +214,14 @@ vim.keymap.set('v', '<CapsLock>', '<Esc>', { noremap = true, silent = true })
 
 vim.cmd 'colorscheme default'
 
+-- Map Ctrl+u to move up a page and center
+vim.keymap.set('i', '<C-u>', '<C-u>zz', { noremap = true, silent = true })
+vim.keymap.set('i', '<C-d>', '<C-d>zz', { noremap = true, silent = true })
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true, silent = true })
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true })
+vim.keymap.set('v', '<C-u>', '<C-u>zz', { noremap = true, silent = true })
+vim.keymap.set('v', '<C-d>', '<C-d>zz', { noremap = true, silent = true })
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
