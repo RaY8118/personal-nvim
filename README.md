@@ -7,9 +7,8 @@ a starting point for Neovim configuration. I've customized it to include additio
 and features I use in my workflow.
 
 Key differences from the original:
-- Added plugins for comment, null-ls, tailwind-tools, typescript-tools.
 - Modified `init.lua`.
-- Changed theme to [tokyodark](https://github.com/tiagovla/tokyodark.nvim)
+- Changed theme to [onedark](https://github.com/navarasu/onedark.nvim)
 
 ## Installation
 
