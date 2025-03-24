@@ -7,7 +7,5 @@ return {
     'nvim-telescope/telescope.nvim',
     'neovim/nvim-lspconfig',
   },
-  config = function()
-    require('tailwind-tools').setup {}
-  end,
+  opts = {},
 }
