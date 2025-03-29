@@ -7,7 +7,6 @@ return {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
 
     { 'j-hui/fidget.nvim', opts = {} },
-    { 'nvim-java/nvim-java' },
 
     'hrsh7th/cmp-nvim-lsp',
   },
@@ -83,6 +82,11 @@ return {
       --
       -- But for many setups, the LSP (`ts_ls`) will work just fine
       ts_ls = {},
+      tailwindcss = {
+        filetypes_exclude = { 'markdown' },
+        filetypes_include = {},
+        filetypes = { 'html' },
+      },
       html = {},
       cssls = {},
       pylsp = {
@@ -126,7 +130,6 @@ return {
     }
 
     require('mason').setup()
-    require('java').setup()
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
       'stylua',

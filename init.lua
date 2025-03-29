@@ -2,6 +2,7 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
+vim.g.python3_host_prog = '/usr/bin/python3'
 
 -- Basic editor settings
 vim.opt.number = true
@@ -35,8 +36,8 @@ end)
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true, silent = true })
-vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true })
+-- vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true, silent = true })
+-- vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true })
 
 -- Remap Caps Lock to Esc
 vim.keymap.set('i', '<CapsLock>', '<Esc>', { noremap = true, silent = true })

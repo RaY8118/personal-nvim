@@ -23,18 +23,36 @@ return {
     'saadparwaiz1/cmp_luasnip',
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-path',
-    'tailwind-tools',
     'onsails/lspkind.nvim',
+    { 'roobert/tailwindcss-colorizer-cmp.nvim' },
   },
   config = function()
     local cmp = require 'cmp'
     local luasnip = require 'luasnip'
+    local lspkind = require 'lspkind'
+
     luasnip.config.setup {}
 
     cmp.setup {
       snippet = {
         expand = function(args)
           luasnip.lsp_expand(args.body)
+        end,
+      },
+      formatting = {
+        format = function(entry, item)
+          local kind_formatter = lspkind.cmp_format {
+            mode = 'symbol',
+            maxwidth = {
+              menu = 50,
+              abbr = 50,
+            },
+            ellipsis_char = '...',
+            show_labelDetails = true,
+          }
+
+          kind_formatter(entry, item)
+          return require('tailwindcss-colorizer-cmp').formatter(entry, item)
         end,
       },
       completion = { completeopt = 'menu,menuone,noinsert' },
@@ -80,13 +98,6 @@ return {
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'path' },
-      },
-    }
-    return {
-      formatting = {
-        format = require('lspkind').cmp_format {
-          before = require('tailwind-tools.cmp').lspkind_format,
-        },
       },
     }
   end,

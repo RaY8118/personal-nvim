@@ -69,6 +69,7 @@ return {
       handlers = {},
       ensure_installed = {
         'python',
+        'java',
       },
     }
     -- Dap UI setup
