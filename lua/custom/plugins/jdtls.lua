@@ -1,15 +1,10 @@
 return {
   'mfussenegger/nvim-jdtls',
   config = function()
-    local jdtls_path = vim.fn.exepath 'jdtls'
-    if not jdtls_path or jdtls_path == '' then
-      vim.notify('JDTLS executable not found in PATH!', vim.log.levels.ERROR)
-      return
-    end
-    local cmd = { jdtls_path }
+    local cmd = { vim.fn.expand '~/.local/share/nvim/mason/bin/jdtls' }
 
     local root_dir = function(fname)
-      return vim.fs.dirname(vim.fs.find('.git', { path = fname, upward = true })[1])
+      return vim.fs.dirname(vim.fs.find({ '.git', 'gradlew', 'mvnw', 'src' }, { path = fname, upward = true })[1])
     end
 
     local project_name = function(root_dir)
