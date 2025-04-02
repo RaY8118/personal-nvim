@@ -84,8 +84,8 @@ return {
       ts_ls = {},
       tailwindcss = {
         filetypes_exclude = { 'markdown' },
-        filetypes_include = {},
-        filetypes = { 'html' },
+        filetypes_include = { 'javascriptreact', 'typescriptreact', 'html', 'css' },
+        filetypes = { 'html', 'javascriptreact', 'typescriptreact', 'css', 'jsx', 'tsx' },
       },
       html = {},
       cssls = {},
