@@ -72,9 +72,9 @@ return {
 
     local servers = {
       -- clangd = {},
-      -- gopls = {},
+      gopls = {},
       -- pyright = {},
-      -- rust_analyzer = {},
+      rust_analyzer = {},
       -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
       --
       -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -98,7 +98,7 @@ return {
               autopep8 = { enabled = false },
               yapf = { enabled = false },
               -- Linter options
-              pylint = { enabled = false, executable = 'pylint' },
+              pylint = { enabled = true, executable = 'pylint' },
               pyflakes = { enabled = false },
               pycodestyle = { enabled = false },
               -- type checker
@@ -133,6 +133,7 @@ return {
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
       'stylua',
+      'codelldb',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
     require('mason-lspconfig').setup {
