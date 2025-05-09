@@ -74,7 +74,7 @@ return {
       -- clangd = {},
       gopls = {},
       -- pyright = {},
-      rust_analyzer = {},
+      -- rust_analyzer = {},
       -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
       --
       -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -98,7 +98,7 @@ return {
               autopep8 = { enabled = false },
               yapf = { enabled = false },
               -- Linter options
-              pylint = { enabled = true, executable = 'pylint' },
+              pylint = { enabled = false, executable = 'pylint' },
               pyflakes = { enabled = false },
               pycodestyle = { enabled = false },
               -- type checker
