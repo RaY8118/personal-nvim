@@ -27,8 +27,8 @@ return {
       vim.api.nvim_create_autocmd('FileType', {
         pattern = 'java',
         callback = function()
-          vim.api.nvim_set_keymap('n', '<F5>', ':w<CR>:FloatermNew --autoclose=0 javac % && java %<CR>', { noremap = true, silent = true })
-          vim.api.nvim_set_keymap('i', '<F5>', '<ESC>:w<CR>:FloatermNew --autoclose=0 javac % && java %<CR>', { noremap = true, silent = true })
+          vim.api.nvim_set_keymap('n', '<F6>', ':w<CR>:FloatermNew --autoclose=0 javac % && java %<CR>', { noremap = true, silent = true })
+          vim.api.nvim_set_keymap('i', '<F6>', '<ESC>:w<CR>:FloatermNew --autoclose=0 javac % && java %<CR>', { noremap = true, silent = true })
         end,
       })
     end,

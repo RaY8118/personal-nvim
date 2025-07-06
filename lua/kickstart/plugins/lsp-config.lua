@@ -146,6 +146,8 @@ return {
       'stylua',
       'codelldb',
       'hadolint',
+      'java-debug-adapter',
+      'java-test',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
     require('mason-lspconfig').setup {

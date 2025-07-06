@@ -1,60 +1,57 @@
 return {
   'mfussenegger/nvim-jdtls',
+  ft = { 'java' },
   config = function()
-    local cmd = { vim.fn.expand '~/.local/share/nvim/mason/bin/jdtls' }
+    local jdtls = require 'jdtls'
 
-    local root_dir = function(fname)
-      return vim.fs.dirname(vim.fs.find({ '.git', 'gradlew', 'mvnw', 'src' }, { path = fname, upward = true })[1])
+    -- Detect the project root
+    local root_dir = require('jdtls.setup').find_root {
+      '.git',
+      '.project',
+      '.jdtls-root',
+      'src',
+      'mvnw',
+      'gradlew',
+    }
+    if not root_dir then
+      vim.notify('❌ JDTLS: Could not find project root', vim.log.levels.ERROR)
+      return
     end
 
-    local project_name = function(root_dir)
-      return root_dir and vim.fn.fnamemodify(root_dir, ':t') or 'unknown_project'
-    end
+    -- Project name and workspace path
+    local project_name = vim.fn.fnamemodify(root_dir, ':t')
+    local workspace_dir = vim.fn.stdpath 'cache' .. '/jdtls/workspace/' .. project_name
 
-    local jdtls_config_dir = function(project_name)
-      return vim.fn.stdpath 'cache' .. '/jdtls/' .. project_name .. '/config'
-    end
-
-    local jdtls_workspace_dir = function(project_name)
-      return vim.fn.stdpath 'cache' .. '/jdtls/' .. project_name .. '/workspace'
-    end
-
-    local full_cmd = function(opts)
-      local fname = vim.api.nvim_buf_get_name(0)
-      local root_dir = opts.root_dir(fname)
-      local project_name = opts.project_name(root_dir)
-      local cmd = vim.deepcopy(opts.cmd)
-      if project_name then
-        vim.list_extend(cmd, {
-          '-configuration',
-          opts.jdtls_config_dir(project_name),
-          '-data',
-          opts.jdtls_workspace_dir(project_name),
-        })
-      end
-      return cmd
-    end
-
-    -- Setup nvim-jdtls
-    require('lspconfig').jdtls.setup {
-      cmd = cmd,
+    print('Root Dir:', root_dir)
+    print('Workspace Dir:', workspace_dir)
+    print('File:', vim.api.nvim_buf_get_name(0))
+    -- Command to start JDTLS
+    local config = {
+      cmd = {
+        vim.fn.expand '~/.local/share/nvim/mason/bin/jdtls',
+        '-data',
+        workspace_dir,
+      },
       root_dir = root_dir,
-      project_name = project_name,
-      jdtls_config_dir = jdtls_config_dir,
-      jdtls_workspace_dir = jdtls_workspace_dir,
-      full_cmd = full_cmd,
-      dap = { hotcodereplace = 'auto', config_overrides = {} },
-      dap_main = {},
-      test = true,
       settings = {
         java = {
+          configuration = {
+            -- If you're using plain Java projects with "src" folder
+            sourcePaths = { 'src' },
+          },
           inlayHints = {
             parameterNames = {
-              enabled = 'all',
+              enabled = 'all', -- Optional but useful
             },
           },
         },
       },
+      init_options = {
+        bundles = {},
+      },
     }
+
+    -- Start or attach to the language server
+    jdtls.start_or_attach(config)
   end,
 }
