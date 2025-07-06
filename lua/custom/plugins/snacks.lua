@@ -13,7 +13,7 @@ return {
         {
           pane = 2,
           section = 'terminal',
-          cmd = 'pokemon-colorscripts -n charizard --no-title',
+          cmd = 'pokemon-colorscripts -b -n pikachu --no-title',
           height = 25,
           padding = 1,
         },
