@@ -117,8 +117,8 @@ return {
         filetypes_include = { 'javascriptreact', 'typescriptreact', 'html', 'css' },
         filetypes = { 'html', 'javascriptreact', 'typescriptreact', 'css', 'jsx', 'tsx' },
       },
-      html = {},
-      cssls = {},
+      -- html = {},
+      -- cssls = {},
       pylsp = {
         settings = {
           pylsp = {
@@ -146,20 +146,6 @@ return {
       dockerls = {},
       docker_compose_language_service = {},
       marksman = {},
-      jsonls = {
-        on_new_config = function(new_config)
-          new_config.settings.json.schemas = new_config.settings.json.schemas or {}
-          vim.list_extend(new_config.settings.json.schemas, require('schemastore').json.schemas())
-        end,
-        settings = {
-          json = {
-            format = {
-              enable = true,
-            },
-            validate = { enable = true },
-          },
-        },
-      },
       lua_ls = {
         -- cmd = { ... },
         -- filetypes = { ... },
@@ -180,7 +166,6 @@ return {
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
       'stylua',
-      'codelldb',
       'hadolint',
       'java-debug-adapter',
       'java-test',

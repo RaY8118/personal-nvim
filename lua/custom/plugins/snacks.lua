@@ -7,7 +7,7 @@ return {
     bigfile = { enabled = true },
     dashboard = {
       enabled = true,
-      width = 85,
+      width = 75,
       sections = {
         { section = 'header' },
         {
@@ -79,7 +79,7 @@ return {
       desc = 'Notification History',
     },
     {
-      '\\',
+      '<C-e>',
       function()
         Snacks.explorer()
       end,
