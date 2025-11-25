@@ -10,13 +10,13 @@ return {
       width = 75,
       sections = {
         { section = 'header' },
-        {
-          pane = 2,
-          section = 'terminal',
-          cmd = 'pokemon-colorscripts -b -n pikachu --no-title',
-          height = 25,
-          padding = 1,
-        },
+        -- {
+        --   pane = 2,
+        --   section = 'terminal',
+        --   cmd = 'pokemon-colorscripts -b -n pikachu --no-title',
+        --   height = 25,
+        --   padding = 1,
+        -- },
         { section = 'keys', gap = 1, padding = 1 },
         { section = 'startup' },
       },
