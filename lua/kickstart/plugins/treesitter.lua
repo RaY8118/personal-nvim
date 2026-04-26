@@ -12,6 +12,7 @@ return {
       'diff',
       'html',
       'java',
+      'json5',
       'lua',
       'luadoc',
       'markdown',

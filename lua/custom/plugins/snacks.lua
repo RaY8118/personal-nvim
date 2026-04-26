@@ -7,33 +7,20 @@ return {
     bigfile = { enabled = true },
     dashboard = {
       enabled = true,
-      width = 85,
+      width = 75,
       sections = {
         { section = 'header' },
-        {
-          pane = 2,
-          section = 'terminal',
-          cmd = 'colorscript -e square',
-          height = 5,
-          padding = 1,
-        },
+        -- {
+        --   pane = 2,
+        --   section = 'terminal',
+-- {
+        --   pane = 2,
+        --   section = 'terminal',
+        --   cmd = 'pokemon-colorscripts -b -n pikachu --no-title',
+        --   height = 25,
+        --   padding = 1,
+        -- },
         { section = 'keys', gap = 1, padding = 1 },
-        { pane = 2, icon = ' ', title = 'Recent Files', section = 'recent_files', indent = 2, padding = 1 },
-        { pane = 2, icon = ' ', title = 'Projects', section = 'projects', indent = 2, padding = 1 },
-        {
-          pane = 2,
-          icon = ' ',
-          title = 'Git Status',
-          section = 'terminal',
-          enabled = function()
-            return Snacks.git.get_root() ~= nil
-          end,
-          cmd = 'git status --short --branch --renames',
-          height = 5,
-          padding = 1,
-          ttl = 5 * 60,
-          indent = 3,
-        },
         { section = 'startup' },
       },
     },
@@ -45,7 +32,7 @@ return {
       enabled = true,
       timeout = 3000,
     },
-    picker = { enabled = false },
+    picker = { enabled = true, hidden = true, ignored = true },
     quickfile = { enabled = true },
     scope = { enabled = false },
     scroll = { enabled = true },
@@ -95,7 +82,7 @@ return {
       desc = 'Notification History',
     },
     {
-      '\\',
+      '<C-e>',
       function()
         Snacks.explorer()
       end,

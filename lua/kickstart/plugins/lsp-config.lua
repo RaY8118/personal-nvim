@@ -28,7 +28,7 @@ return {
         map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
         map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
         local client = vim.lsp.get_client_by_id(event.data.client_id)
-        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+        if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
           local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer = event.buf,
@@ -50,7 +50,7 @@ return {
             end,
           })
         end
-        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+        if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
           map('<leader>th', function()
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
           end, '[T]oggle Inlay [H]ints')
@@ -72,23 +72,53 @@ return {
 
     local servers = {
       -- clangd = {},
-      gopls = {},
+      gopls = {
+        settings = {
+          gopls = {
+            gofumpt = true,
+            codelenses = {
+              gc_details = false,
+              generate = true,
+              regenerate_cgo = true,
+              run_govulncheck = true,
+              test = true,
+              tidy = true,
+              upgrade_dependency = true,
+              vendor = true,
+            },
+            hints = {
+              assignVariableTypes = true,
+              compositeLiteralFields = true,
+              compositeLiteralTypes = true,
+              constantValues = true,
+              functionTypeParameters = true,
+              parameterNames = true,
+              rangeVariableTypes = true,
+            },
+            analyses = {
+              nilness = true,
+              unusedparams = true,
+              unusedwrite = true,
+              useany = true,
+            },
+            usePlaceholders = true,
+            completeUnimported = true,
+            staticcheck = true,
+            directoryFilters = { '-.git', '-.vscode', '-.idea', '-.vscode-test', '-node_modules' },
+            semanticTokens = true,
+          },
+        },
+      },
       -- pyright = {},
-      rust_analyzer = {},
-      -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-      --
-      -- Some languages (like typescript) have entire language plugins that can be useful:
-      --    https://github.com/pmizio/typescript-tools.nvim
-      --
-      -- But for many setups, the LSP (`ts_ls`) will work just fine
+      -- rust_analyzer = {},
       ts_ls = {},
       tailwindcss = {
         filetypes_exclude = { 'markdown' },
         filetypes_include = { 'javascriptreact', 'typescriptreact', 'html', 'css' },
         filetypes = { 'html', 'javascriptreact', 'typescriptreact', 'css', 'jsx', 'tsx' },
       },
-      html = {},
-      cssls = {},
+      -- html = {},
+      -- cssls = {},
       pylsp = {
         settings = {
           pylsp = {
@@ -97,22 +127,24 @@ return {
               black = { enabled = true },
               autopep8 = { enabled = false },
               yapf = { enabled = false },
-              -- Linter options
+              -- linter options
               pylint = { enabled = true, executable = 'pylint' },
               pyflakes = { enabled = false },
               pycodestyle = { enabled = false },
               -- type checker
-              pylsp_mypy = { enabled = false },
+              pylsp_mypy = { enabled = true },
               -- auto-completion options
               jedi_completion = { fuzzy = true },
               -- import sorting
               pyls_isort = { enabled = true },
-              mccabe = { enabled = false },
             },
           },
         },
       },
       jdtls = {},
+      dockerls = {},
+      docker_compose_language_service = {},
+      marksman = {},
       lua_ls = {
         -- cmd = { ... },
         -- filetypes = { ... },
@@ -133,7 +165,14 @@ return {
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
       'stylua',
-      'codelldb',
+      'hadolint',
+      'java-debug-adapter',
+      'java-test',
+      'goimports',
+      'gofumpt',
+      'gomodifytags',
+      'impl',
+      'delve',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
     require('mason-lspconfig').setup {

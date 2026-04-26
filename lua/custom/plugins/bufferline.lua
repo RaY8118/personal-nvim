@@ -31,5 +31,6 @@ return {
     map('n', '<A-Right>', '<cmd>BufferLineCycleNext<cr>', opts)
     map('n', '<A-h>', '<cmd>BufferLineCyclePrev<cr>', opts)
     map('n', '<A-l>', '<cmd>BufferLineCycleNext<cr>', opts)
+    map('n', '<A-x>', '<cmd>bdelete<cr>', opts)
   end,
 }
