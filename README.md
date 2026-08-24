@@ -8,8 +8,7 @@ and features I use in my workflow.
 
 Key differences from the original:
 - Modified `init.lua`.
-- Changed theme to [onedark](https://github.com/navarasu/onedark.nvim)
-
+  
 ## Installation
 
 ### Install Neovim
