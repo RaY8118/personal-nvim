@@ -10,16 +10,6 @@ return {
       width = 75,
       sections = {
         { section = 'header' },
-        -- {
-        --   pane = 2,
-        --   section = 'terminal',
--- {
-        --   pane = 2,
-        --   section = 'terminal',
-        --   cmd = 'pokemon-colorscripts -b -n pikachu --no-title',
-        --   height = 25,
-        --   padding = 1,
-        -- },
         { section = 'keys', gap = 1, padding = 1 },
         { section = 'startup' },
       },
@@ -40,7 +30,7 @@ return {
     words = { enabled = true },
     styles = {
       notification = {
-        wo = { wrap = true }, -- Wrap notifications
+        wo = { wrap = true },
       },
     },
   },
@@ -89,20 +79,6 @@ return {
       desc = 'File Explorer',
     },
     -- find
-    -- {
-    --   '<leader>fb',
-    --   function()
-    --     Snacks.picker.buffers()
-    --   end,
-    --   desc = 'Buffers',
-    -- },
-    -- {
-    --   '<leader>fc',
-    --   function()
-    --     Snacks.picker.files { cwd = vim.fn.stdpath 'config' }
-    --   end,
-    --   desc = 'Find Config File',
-    -- },
     {
       '<leader>sf',
       function()
@@ -110,13 +86,6 @@ return {
       end,
       desc = 'Find Files',
     },
-    -- {
-    --   '<leader>fg',
-    --   function()
-    --     Snacks.picker.git_files()
-    --   end,
-    --   desc = 'Find Git Files',
-    -- },
     {
       '<leader>sp',
       function()
@@ -124,63 +93,6 @@ return {
       end,
       desc = 'Projects',
     },
-    -- {
-    --   '<leader>fr',
-    --   function()
-    --     Snacks.picker.recent()
-    --   end,
-    --   desc = 'Recent',
-    -- },
-    -- git
-    -- {
-    --   '<leader>gb',
-    --   function()
-    --     Snacks.picker.git_branches()
-    --   end,
-    --   desc = 'Git Branches',
-    -- },
-    -- {
-    --   '<leader>gl',
-    --   function()
-    --     Snacks.picker.git_log()
-    --   end,
-    --   desc = 'Git Log',
-    -- },
-    -- {
-    --   '<leader>gL',
-    --   function()
-    --     Snacks.picker.git_log_line()
-    --   end,
-    --   desc = 'Git Log Line',
-    -- },
-    -- {
-    --   '<leader>gs',
-    --   function()
-    --     Snacks.picker.git_status()
-    --   end,
-    --   desc = 'Git Status',
-    -- },
-    -- {
-    --   '<leader>gS',
-    --   function()
-    --     Snacks.picker.git_stash()
-    --   end,
-    --   desc = 'Git Stash',
-    -- },
-    -- {
-    --   '<leader>gd',
-    --   function()
-    --     Snacks.picker.git_diff()
-    --   end,
-    --   desc = 'Git Diff (Hunks)',
-    -- },
-    -- {
-    --   '<leader>gf',
-    --   function()
-    --     Snacks.picker.git_log_file()
-    --   end,
-    --   desc = 'Git Log File',
-    -- },
     -- Grep
     {
       '<leader>sb',
@@ -197,13 +109,6 @@ return {
       desc = 'Grep Open Buffers',
     },
     {
-      '<leader>sg',
-      function()
-        Snacks.picker.grep()
-      end,
-      desc = 'Grep',
-    },
-    {
       '<leader>sw',
       function()
         Snacks.picker.grep_word()
@@ -213,32 +118,25 @@ return {
     },
     -- search
     {
+      '<leader>sn',
+      function()
+        Snacks.picker.files { cwd = vim.fn.stdpath 'config' }
+      end,
+      desc = 'Neovim Config Files',
+    },
+    {
       '<leader>s"',
       function()
         Snacks.picker.registers()
       end,
       desc = 'Registers',
     },
-    -- {
-    --   '<leader>s/',
-    --   function()
-    --     Snacks.picker.search_history()
-    --   end,
-    --   desc = 'Search History',
-    -- },
     {
       '<leader>sa',
       function()
         Snacks.picker.autocmds()
       end,
       desc = 'Autocmds',
-    },
-    {
-      '<leader>sb',
-      function()
-        Snacks.picker.lines()
-      end,
-      desc = 'Buffer Lines',
     },
     {
       '<leader>sc',
@@ -324,13 +222,6 @@ return {
       end,
       desc = 'Man Pages',
     },
-    -- {
-    --   '<leader>sp',
-    --   function()
-    --     Snacks.picker.lazy()
-    --   end,
-    --   desc = 'Search for Plugin Spec',
-    -- },
     {
       '<leader>sq',
       function()
@@ -352,64 +243,6 @@ return {
       end,
       desc = 'Undo History',
     },
-    -- {
-    --   '<leader>uC',
-    --   function()
-    --     Snacks.picker.colorschemes()
-    --   end,
-    --   desc = 'Colorschemes',
-    -- },
-    -- LSP
-    -- {
-    --   'gd',
-    --   function()
-    --     Snacks.picker.lsp_definitions()
-    --   end,
-    --   desc = 'Goto Definition',
-    -- },
-    -- {
-    --   'gD',
-    --   function()
-    --     Snacks.picker.lsp_declarations()
-    --   end,
-    --   desc = 'Goto Declaration',
-    -- },
-    -- {
-    --   'gr',
-    --   function()
-    --     Snacks.picker.lsp_references()
-    --   end,
-    --   nowait = true,
-    --   desc = 'References',
-    -- },
-    -- {
-    --   'gI',
-    --   function()
-    --     Snacks.picker.lsp_implementations()
-    --   end,
-    --   desc = 'Goto Implementation',
-    -- },
-    -- {
-    --   'gy',
-    --   function()
-    --     Snacks.picker.lsp_type_definitions()
-    --   end,
-    --   desc = 'Goto T[y]pe Definition',
-    -- },
-    -- {
-    --   '<leader>ss',
-    --   function()
-    --     Snacks.picker.lsp_symbols()
-    --   end,
-    --   desc = 'LSP Symbols',
-    -- },
-    -- {
-    --   '<leader>sS',
-    --   function()
-    --     Snacks.picker.lsp_workspace_symbols()
-    --   end,
-    --   desc = 'LSP Workspace Symbols',
-    -- },
     -- Other
     {
       '<leader>z',
@@ -439,20 +272,6 @@ return {
       end,
       desc = 'Select Scratch Buffer',
     },
-    {
-      '<leader>n',
-      function()
-        Snacks.notifier.show_history()
-      end,
-      desc = 'Notification History',
-    },
-    -- {
-    --   '<leader>bd',
-    --   function()
-    --     Snacks.bufdelete()
-    --   end,
-    --   desc = 'Delete Buffer',
-    -- },
     {
       '<leader>cR',
       function()
@@ -535,16 +354,14 @@ return {
     vim.api.nvim_create_autocmd('User', {
       pattern = 'VeryLazy',
       callback = function()
-        -- Setup some globals for debugging (lazy-loaded)
         _G.dd = function(...)
           Snacks.debug.inspect(...)
         end
         _G.bt = function()
           Snacks.debug.backtrace()
         end
-        vim.print = _G.dd -- Override print to use snacks for `:=` command
+        vim.print = _G.dd
 
-        -- Create some toggle mappings
         Snacks.toggle.inlay_hints():map '<leader>uh'
       end,
     })
