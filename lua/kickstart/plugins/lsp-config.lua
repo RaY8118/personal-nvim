@@ -113,34 +113,19 @@ return {
       -- rust_analyzer = {},
       ts_ls = {},
       tailwindcss = {
-        filetypes_exclude = { 'markdown' },
-        filetypes_include = { 'javascriptreact', 'typescriptreact', 'html', 'css' },
         filetypes = { 'html', 'javascriptreact', 'typescriptreact', 'css', 'jsx', 'tsx' },
       },
       -- html = {},
       -- cssls = {},
-      pylsp = {
-        settings = {
-          pylsp = {
-            plugins = {
-              -- formatter options
-              black = { enabled = true },
-              autopep8 = { enabled = false },
-              yapf = { enabled = false },
-              -- linter options
-              pylint = { enabled = true, executable = 'pylint' },
-              pyflakes = { enabled = false },
-              pycodestyle = { enabled = false },
-              -- type checker
-              pylsp_mypy = { enabled = true },
-              -- auto-completion options
-              jedi_completion = { fuzzy = true },
-              -- import sorting
-              pyls_isort = { enabled = true },
-            },
-          },
-        },
-      },
+      -- Lint (default rules E4/E7/E9/F), format, code actions + import
+      -- organization. Ruff reads pyproject.toml / ruff.toml from the project
+      -- when present, otherwise uses its defaults.
+      ruff = {},
+      -- Definitions/references/hover + type info (ruff does not provide
+      -- these, so navigation needs a second server). Standard pair:
+      -- pyright for navigation/type info, ruff for lint/format.
+      pyright = {},
+      -- Installed via Mason, started manually in lua/custom/plugins/jdtls.lua
       jdtls = {},
       dockerls = {},
       docker_compose_language_service = {},
@@ -177,14 +162,18 @@ return {
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
     require('mason-lspconfig').setup {
       ensure_installed = vim.tbl_keys(servers),
-      automatic_installation = true,
-      handlers = {
-        function(server_name)
-          local server = servers[server_name] or {}
-          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-          require('lspconfig')[server_name].setup(server)
-        end,
-      },
+      -- The `servers` table is applied below via `vim.lsp.config` (the old
+      -- mason-lspconfig `handlers` API is silently ignored by v2.x).
+      -- jdtls is not enabled here; it is started by lua/custom/plugins/jdtls.lua.
+      automatic_enable = false,
     }
+
+    for server_name, server in pairs(servers) do
+      if server_name ~= 'jdtls' then
+        server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+        vim.lsp.config(server_name, server)
+        vim.lsp.enable(server_name)
+      end
+    end
   end,
 }
