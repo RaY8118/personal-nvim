@@ -57,8 +57,16 @@ return {
       },
       completion = { completeopt = 'menu,menuone,noinsert' },
       mapping = cmp.mapping.preset.insert {
-        -- Select the [n]ext item
-        --['<C-n>'] = cmp.mapping.select_next_item(),
+        -- Select the [n]ext item, or open the completion menu when it is
+        -- closed. Doubles as a manual trigger in terminals/tmux where
+        -- <C-Space> gets consumed before reaching nvim.
+        ['<C-n>'] = cmp.mapping(function()
+          if cmp.visible() then
+            cmp.select_next_item()
+          else
+            cmp.complete()
+          end
+        end),
         -- Select the [p]revious item
         --['<C-p>'] = cmp.mapping.select_prev_item(),
 
