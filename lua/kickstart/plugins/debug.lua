@@ -73,11 +73,10 @@ return {
       },
     }
 
-    dap.adapters.java = {
-      type = 'server',
-      host = '127.0.0.1',
-      port = 5005,
-    }
+    -- The java debug adapter is registered by `jdtls.dap.setup_dap()` in
+    -- lua/custom/plugins/jdtls.lua (java-debug bundle runs inside jdtls and
+    -- handles both local launch and remote attach requests). The attach
+    -- config below routes through that adapter automatically.
     dap.configurations.java = {
       {
         type = 'java',
